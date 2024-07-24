@@ -79,6 +79,20 @@
 
     {# Analytics #}
     {% if config.extra.analytics.enabled %}
+        {% if config.extra.analytics.googletag.id %}
+            {% set gtag_id = config.extra.analytics.googletag.id %}
+            
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id={{ gtag_id }}"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', '{{ gtag_id }}');
+            </script>
+        {% endif %}
+
         {% if config.extra.analytics.umami.website_id %}
             {% set website_id = config.extra.analytics.umami.website_id %}
             {% set host_url = config.extra.analytics.umami.host_url | default(value="https://analytics.eu.umami.is") %}

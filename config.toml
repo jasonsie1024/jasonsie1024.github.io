@@ -42,3 +42,9 @@ socials = [
   { name = "linkedin", url = "https://www.linkedin.com/in/wen-chieh-sie-066943237/", icon = "linkedin"},
   { name = "github", url = "https://github.com/jasonsie1024", icon = "github" },
 ]
+
+[extra.analytics]
+enabled = true
+
+[extra.analytics.googletag]
+id = "G-7EMT39BGM3"

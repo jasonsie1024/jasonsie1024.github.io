@@ -1,8 +1,5 @@
 +++
-title= "Apollo Theme"
+title= "Jason's Blog"
 template = "homepage.html"
 +++
 
-Thanks for checking out this theme!
-
-Checkout all the [options you can configure](./posts/configuration) and the [example pages](./tags/example/).
