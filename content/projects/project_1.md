@@ -1,6 +1,6 @@
 +++
-title = "TagMate Development Log"
-description = "Developing a social app from 0 to 1M users"
+title = "Project Development Log"
+description = "Project description"
 weight = 1
 draft = true
 
