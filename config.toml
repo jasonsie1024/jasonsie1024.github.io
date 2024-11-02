@@ -39,7 +39,7 @@ menu = [
 socials = [
   { name = "facebook", url = "https://www.facebook.com/1048576.sqrt/", icon = "facebook"},
   { name = "instagram", url = "https://www.instagram.com/jason_10.24/", icon = "instagram"},
-  { name = "linkedin", url = "https://www.linkedin.com/in/wen-chieh-sie-066943237/", icon = "linkedin"},
+  { name = "linkedin", url = "https://www.linkedin.com/in/wen-chieh-sie/", icon = "linkedin"},
   { name = "github", url = "https://github.com/jasonsie1024", icon = "github" },
 ]
 
