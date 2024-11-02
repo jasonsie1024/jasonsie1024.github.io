@@ -157,15 +157,15 @@
 
     {% set theme = config.extra.theme | default(value="toggle") %}
     {% if theme == "dark" %}
-        <link rel="stylesheet" type="text/css" href="{{ get_url(path='theme/dark.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ get_url(path='custom_dark.css') }}" />
     {% elif theme == "light" %}
         <link rel="stylesheet" type="text/css" href={{ get_url(path="theme/light.css") }} />
     {% elif theme == "auto" %}
         <link rel="stylesheet" type="text/css" href={{ get_url(path="theme/light.css") }} />
-        <link rel="stylesheet" type="text/css" href="{{ get_url(path='theme/dark.css') }}" media="(prefers-color-scheme: dark)" />
+        <link rel="stylesheet" type="text/css" href="{{ get_url(path='custom_dark.css') }}" media="(prefers-color-scheme: dark)" />
     {% elif theme == "toggle" %}
         <link rel="stylesheet" type="text/css" href={{ get_url(path="theme/light.css") }} />
-        <link id="darkModeStyle" rel="stylesheet" type="text/css" href="{{ get_url(path='theme/dark.css') }}" />
+        <link id="darkModeStyle" rel="stylesheet" type="text/css" href="{{ get_url(path='custom_dark.css') }}" />
     {% endif %}
 
     <!-- Set the correct theme in the script -->
