@@ -4,6 +4,8 @@ date = "2024-11-10"
 
 [taxonomies]
 tags = ["Travel"]
+
+draft = true
 +++
 
 ![](/expedia.png)
