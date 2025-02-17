@@ -1,0 +1,16 @@
+<div class="note-container">
+    <button class="note-toggle">
+          <div>
+          {{ "⚠️ **Disclaimer**" | markdown | safe }}
+          </div>
+    </button>
+    <div class="note-content">
+        {{ "
+
+1. The content on this blog is for informational purposes only and does not constitute financial advice. Please do your own research and consult a financial professional before making any investment decisions.
+2. Cryptocurrencies and stocks are volatile and carry significant risks. Do not invest in assets you do not fully understand or cannot afford to lose.
+3. Strategies and examples shared are based on personal experience and may not guarantee success. Market conditions and opportunities can change quickly, so stay informed and make decisions responsibly.        
+
+        " | markdown | safe }}
+    </div>
+</div>
