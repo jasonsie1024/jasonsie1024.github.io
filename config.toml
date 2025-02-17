@@ -25,6 +25,7 @@ highlight_theme = "ayu-light"
 theme = "toggle"
 fancy_code = true
 dynamic_note = true
+favicon = "/icon/favicon.png"
 
 mathjax = true
 mathjax_dollar_inline_enable = true
