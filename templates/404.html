@@ -1,8 +1,6 @@
 {% extends "page.html" %}
 
 {% block main_content %}
-    <main class="centered-header">
-        {{ post_macros::page_header(title="404")}}
-        <p>Page not found :(</p>
-    </main>
+    {{ post_macros::page_header(title="404")}}
+    <p>Page not found :(</p>
 {% endblock main_content %}
