@@ -1,0 +1,13 @@
+@import "../themes/apollo/sass/theme/light.scss";
+
+:root.light {
+    --primary-color: #ef5350 !important;
+}
+
+h1 {
+    color: #ef5350;
+}
+
+h2 {
+    color: #ef5350;
+}

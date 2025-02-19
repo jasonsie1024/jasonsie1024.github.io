@@ -12,7 +12,8 @@ tags=["arbitrage", "crypto"]
 # TL;DR
 * Basis Arbitrage is:
     - Low risk arbitrage between Spot and Coin-Margin Delivery.
-    - Creating a price-neutral hedging position and hold to basis convergence. 
+    - Arbitrage that profit rate is already known when creating positions.
+    - Creating a pair of price-neutral hedging positions and hold to basis convergence. 
     - Not totally risk-free since systematic risk (e.g. CEX) still applies.
     - Getting the risk-adjusted return of the crypto market.
 
