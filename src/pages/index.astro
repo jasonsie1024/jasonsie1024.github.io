@@ -62,10 +62,58 @@ const recentPosts = posts.slice(0, 10);
 				width: 100%;
 				height: auto;
 				border-radius: 0;
+				margin: 0;
 				transition: opacity 0.2s ease;
 			}
 			.post-thumb-link:hover .post-thumb {
 				opacity: 0.85;
+			}
+			.filmstrip-link {
+				display: block;
+				margin-top: 0.8rem;
+				margin-bottom: 0.6rem;
+				text-decoration: none;
+			}
+			.filmstrip-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 6px;
+				width: 100%;
+			}
+			.filmstrip-frame {
+				position: relative;
+				aspect-ratio: 3 / 2;
+				overflow: hidden;
+				background-color: var(--border);
+			}
+			.filmstrip-thumb {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				display: block;
+				border-radius: 0;
+				margin: 0;
+				transition: opacity 0.2s ease;
+			}
+			.filmstrip-link:hover .filmstrip-thumb {
+				opacity: 0.85;
+			}
+			.filmstrip-more {
+				position: absolute;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.45);
+				color: #ffffff;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-family: var(--font-sans);
+				font-size: 1.1rem;
+				font-weight: 600;
+				letter-spacing: 0.05em;
+				transition: background 0.2s ease;
+			}
+			.filmstrip-link:hover .filmstrip-more {
+				background: rgba(0, 0, 0, 0.35);
 			}
 			.post-link {
 				color: var(--text);
@@ -130,6 +178,16 @@ const recentPosts = posts.slice(0, 10);
 					margin-top: 0.6rem;
 					margin-bottom: 0.4rem;
 				}
+				.filmstrip-link {
+					margin-top: 0.6rem;
+					margin-bottom: 0.4rem;
+				}
+				.filmstrip-grid {
+					gap: 4px;
+				}
+				.filmstrip-more {
+					font-size: 0.95rem;
+				}
 				.post-link {
 					font-size: 1.1rem;
 				}
@@ -170,11 +228,26 @@ const recentPosts = posts.slice(0, 10);
 											</div>
 										)}
 									</div>
-									{post.data.heroImage && (
+									{post.data.gallery && post.data.gallery.length > 1 ? (
+										<a href={`/blog/${post.id}/`} class="filmstrip-link" tabindex="-1" aria-hidden="true">
+											<div class="filmstrip-grid" style={`grid-template-columns: repeat(${Math.min(post.data.gallery.length, 3)}, 1fr);`}>
+												{post.data.gallery.slice(0, 3).map((img, idx) => (
+													<div class="filmstrip-frame">
+														<Image src={img} alt="" class="filmstrip-thumb" />
+														{idx === 2 && post.data.gallery.length > 3 && (
+															<div class="filmstrip-more">
+																<span>+{post.data.gallery.length - 3}</span>
+															</div>
+														)}
+													</div>
+												))}
+											</div>
+										</a>
+									) : post.data.heroImage ? (
 										<a href={`/blog/${post.id}/`} class="post-thumb-link" tabindex="-1" aria-hidden="true">
 											<Image src={post.data.heroImage} alt="" class="post-thumb" />
 										</a>
-									)}
+									) : null}
 									{post.data.description && (
 										<p class="post-desc">{post.data.description}</p>
 									)}

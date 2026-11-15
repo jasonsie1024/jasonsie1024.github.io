@@ -1,9 +1,14 @@
 ---
 title: 'HackMD 格式範例與長文排版預覽'
-description: '這篇文件包含一段完整的長篇文學隨筆，用來檢驗行距節奏、字體搭配與閱讀舒適度；文末同時保留常用的 Markdown 與 HackMD 排版語法範例。'
+description: '這篇文件包含一段完整的長篇文學隨筆，用來檢驗行距節奏、字體搭配與閱讀舒適度；文末同時保留常用的 Markdown、照片排版與膠卷預覽語法範例。'
 pubDate: '2026-11-15'
 tags: ['HackMD', 'Markdown', '範例']
 draft: true
+gallery:
+  - '../../assets/blog-placeholder-1.jpg'
+  - '../../assets/blog-placeholder-2.jpg'
+  - '../../assets/blog-placeholder-3.jpg'
+  - '../../assets/blog-placeholder-4.jpg'
 ---
 
 ## 第一部分：長篇隨筆閱讀示範
@@ -27,7 +32,36 @@ draft: true
 
 ## 第二部分：HackMD 常用語法與元件樣式
 
-以下展示文章常用的各類 Markdown 與 HackMD 元素：
+以下展示文章常用的各類 Markdown 與排版元素：
+
+### 照片與攝影集展示語法
+
+#### 1. 列表頁膠卷預覽（Filmstrip）
+在文章最頂端的 Frontmatter 設定 `gallery` 陣列，列表頁就會自動以三聯底片格展示預覽（多於三張會自動標註 `+N`）：
+
+```yaml
+gallery:
+  - '../../assets/cat-practice.jpg'
+  - '../../assets/blog-placeholder-1.jpg'
+  - '../../assets/blog-placeholder-2.jpg'
+  - '../../assets/blog-placeholder-3.jpg'
+```
+
+#### 2. 單張開版大圖（Hero Image）
+若文章為單篇隨筆，可設定 `heroImage`，文章標題上方會自動呈現原比例大圖：
+
+```yaml
+heroImage: '../../assets/cat-practice.jpg'
+```
+
+#### 3. 內文圖片與點擊全螢幕放大
+在內文中可自由插入照片，保持俐落直角與原比例；點擊照片即可全螢幕綻放檢視：
+
+![午後的貓咪](../../assets/cat-practice.jpg)
+
+*午後光影在石階與微塵裡的質地。點擊照片可全螢幕放大檢視，背景會淡入頁面底色覆蓋文字。*
+
+---
 
 ### 各級標題層次
 

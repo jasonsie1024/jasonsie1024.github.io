@@ -8,12 +8,12 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage, tags = [], draft = false } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, gallery, tags = [], draft = false } = Astro.props;
 ---
 
 <html lang="zh-Hant">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title} description={description} image={heroImage} articleDate={pubDate} />
 		<style>
 			.article-header {
 				margin-bottom: 3.5rem;
@@ -63,6 +63,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags = [], draft = 
 				height: auto;
 				border-radius: 0;
 				margin: 0;
+				cursor: pointer;
 			}
 			.article-content {
 				line-height: 1.78;
@@ -158,6 +159,8 @@ const { title, description, pubDate, updatedDate, heroImage, tags = [], draft = 
 				let activeZoomClose: (() => void) | null = null;
 
 				images.forEach((img) => {
+					img.style.cursor = 'pointer';
+
 					// 避免重複綁定
 					if (img.dataset.zoomReady) return;
 					img.dataset.zoomReady = 'true';
@@ -186,6 +189,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags = [], draft = 
 						clone.style.border = 'none';
 						clone.style.outline = 'none';
 						clone.style.zIndex = '9995';
+						clone.style.cursor = 'pointer';
 						clone.style.transformOrigin = 'top left';
 						clone.style.transition = 'transform 0.32s cubic-bezier(0.2, 0, 0.2, 1)';
 						clone.style.willChange = 'transform';
