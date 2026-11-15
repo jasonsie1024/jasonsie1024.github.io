@@ -4,6 +4,7 @@ description: '這篇文件包含一段完整的長篇文學隨筆，用來檢驗
 pubDate: '2026-11-15'
 tags: ['HackMD', 'Markdown', '範例']
 draft: true
+toc: true
 gallery:
   - '../../assets/blog-placeholder-1.jpg'
   - '../../assets/blog-placeholder-2.jpg'
@@ -47,11 +48,12 @@ gallery:
   - '../../assets/blog-placeholder-3.jpg'
 ```
 
-#### 2. 單張開版大圖（Hero Image）
-若文章為單篇隨筆，可設定 `heroImage`，文章標題上方會自動呈現原比例大圖：
+#### 2. 單張開版大圖與圖說（Hero Image & Caption）
+若文章為單篇隨筆，可設定 `heroImage`，文章標題下方會自動呈現原比例大圖；若設定 `heroCaption`，大圖下方會自動顯示優雅的灰色圖說：
 
 ```yaml
 heroImage: '../../assets/cat-practice.jpg'
+heroCaption: 'Leica M6 · 35mm Summicron · Kodak Portra 400'
 ```
 
 #### 3. 內文圖片與點擊全螢幕放大
@@ -60,6 +62,19 @@ heroImage: '../../assets/cat-practice.jpg'
 ![午後的貓咪](../../assets/cat-practice.jpg)
 
 *午後光影在石階與微塵裡的質地。點擊照片可全螢幕放大檢視，背景會淡入頁面底色覆蓋文字。*
+
+#### 4. MDX 圖說組件（`<Figure />`）
+在 `.mdx` 文章中，可直接使用全站內建的 `<Figure />` 組件（不需手動 import）：
+
+```mdx
+<Figure src="../../assets/cat-practice.jpg" caption="午後暖陽下的橘貓 · 2024" />
+```
+或直接引入本地圖片享受 Sharp 最佳化：
+```mdx
+import catImg from '../../assets/cat-practice.jpg';
+
+<Figure src={catImg} caption="午後暖陽下的橘貓 · Leica M6" />
+```
 
 ---
 

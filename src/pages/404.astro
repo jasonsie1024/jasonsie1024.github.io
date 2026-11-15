@@ -1,0 +1,72 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+	<head>
+		<BaseHead title="404" description={SITE_DESCRIPTION} />
+		<style>
+			.error-container {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: flex-start;
+				min-height: 48vh;
+				padding: 2rem 0;
+			}
+			.error-code {
+				font-family: var(--font-serif);
+				font-size: 3.5rem;
+				font-weight: 400;
+				color: var(--text-muted);
+				letter-spacing: 0.05em;
+				margin: 0 0 1rem;
+				line-height: 1;
+			}
+			.error-message {
+				font-size: 1.2rem;
+				line-height: 1.8;
+				margin: 0 0 2.5rem;
+				color: var(--text);
+			}
+			.back-link {
+				color: var(--text-muted);
+				text-decoration: none;
+				font-size: 0.95rem;
+				transition: opacity 0.15s ease;
+			}
+			.back-link:hover {
+				opacity: 0.8;
+			}
+
+			@media (max-width: 640px) {
+				.error-container {
+					min-height: 40vh;
+				}
+				.error-code {
+					font-size: 2.8rem;
+				}
+				.error-message {
+					font-size: 1.05rem;
+					margin-bottom: 2rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="error-container">
+				<h1 class="error-code">404</h1>
+				<p class="error-message">此處空白，尚未留下任何字句或光影。</p>
+				<a href="/" class="back-link">← 返回首頁</a>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+

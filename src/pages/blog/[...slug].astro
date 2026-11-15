@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
+import Figure from '../../components/Figure.astro';
 import { filterDrafts } from '../../consts';
 
 export async function getStaticPaths() {
@@ -13,9 +14,9 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 ---
 
-<BlogPost {...post.data}>
-	<Content />
+<BlogPost {...post.data} headings={headings}>
+	<Content components={{ Figure }} />
 </BlogPost>

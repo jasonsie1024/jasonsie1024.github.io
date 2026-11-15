@@ -6,9 +6,35 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+	headings?: { depth: number; slug: string; text: string }[];
+};
 
-const { title, description, pubDate, updatedDate, heroImage, gallery, tags = [], draft = false } = Astro.props;
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	heroImage,
+	heroCaption,
+	gallery,
+	tags = [],
+	draft = false,
+	toc = false,
+	headings = [],
+} = Astro.props;
+
+const filteredHeadings = toc
+	? headings.filter(
+			(h) =>
+				h.depth >= 1 &&
+				h.depth <= 4 &&
+				h.slug !== 'footnote-label' &&
+				h.text.toLowerCase() !== 'footnotes'
+	  )
+	: [];
+const minDepth = filteredHeadings.length > 0 ? Math.min(...filteredHeadings.map((h) => h.depth)) : 1;
+const showToc = toc && filteredHeadings.length > 0;
 ---
 
 <html lang="zh-Hant">
@@ -16,7 +42,13 @@ const { title, description, pubDate, updatedDate, heroImage, gallery, tags = [],
 		<BaseHead title={title} description={description} image={heroImage} articleDate={pubDate} />
 		<style>
 			.article-header {
-				margin-bottom: 3.5rem;
+				margin-bottom: 2.2rem;
+			}
+			.post-title {
+				margin-top: 0;
+				margin-bottom: 0.8rem;
+				font-size: 2.2rem;
+				line-height: 1.35;
 			}
 			.post-meta {
 				display: flex;
@@ -25,7 +57,7 @@ const { title, description, pubDate, updatedDate, heroImage, gallery, tags = [],
 				gap: 0.8rem;
 				font-size: 0.9rem;
 				color: var(--text-muted);
-				margin-bottom: 0.6rem;
+				margin-bottom: 0;
 				letter-spacing: 0.03em;
 			}
 			.draft-badge {
@@ -48,14 +80,8 @@ const { title, description, pubDate, updatedDate, heroImage, gallery, tags = [],
 			.tag-link:hover {
 				opacity: 0.8;
 			}
-			.post-title {
-				margin-top: 0;
-				margin-bottom: 1.5rem;
-				font-size: 2.2rem;
-				line-height: 1.35;
-			}
 			.hero-image {
-				margin-bottom: 2.8rem;
+				margin: 0 0 3.2rem 0;
 			}
 			.hero-image img {
 				display: block;
@@ -64,6 +90,14 @@ const { title, description, pubDate, updatedDate, heroImage, gallery, tags = [],
 				border-radius: 0;
 				margin: 0;
 				cursor: pointer;
+			}
+			.hero-caption {
+				margin-top: 0.85rem;
+				font-size: 0.85rem;
+				color: var(--text-muted);
+				text-align: right;
+				letter-spacing: 0.04em;
+				line-height: 1.6;
 			}
 			.article-content {
 				line-height: 1.78;
@@ -83,16 +117,90 @@ const { title, description, pubDate, updatedDate, heroImage, gallery, tags = [],
 				opacity: 0.8;
 			}
 
-			@media (max-width: 640px) {
-				.hero-image {
-					margin-bottom: 1.8rem;
+			/* 懸浮右上角 TOC 目次導覽 */
+			.toc-sidebar {
+				position: fixed;
+				top: 6.5rem;
+				left: calc(50% + (var(--content-width) / 2) + 1.25rem);
+				width: 200px;
+				max-height: calc(100vh - 10rem);
+				overflow-y: auto;
+				z-index: 90;
+				padding-left: 0.9rem;
+				border-left: 1px solid var(--border);
+				user-select: none;
+				-webkit-user-select: none;
+			}
+			.toc-sidebar::-webkit-scrollbar {
+				width: 2px;
+			}
+			.toc-sidebar::-webkit-scrollbar-thumb {
+				background-color: var(--border);
+			}
+			.toc-list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+				font-size: 0.82rem;
+				line-height: 1.55;
+			}
+			.toc-item {
+				margin-bottom: 0.55rem;
+			}
+			.toc-item.level-0 {
+				padding-left: 0;
+			}
+			.toc-item.level-1 {
+				padding-left: 0.75rem;
+				font-size: 0.78rem;
+			}
+			.toc-item.level-2 {
+				padding-left: 1.35rem;
+				font-size: 0.76rem;
+			}
+			.toc-item.level-3 {
+				padding-left: 1.85rem;
+				font-size: 0.74rem;
+			}
+			.toc-link {
+				color: var(--text-muted);
+				text-decoration: none;
+				display: block;
+				transition: color 0.15s ease, opacity 0.15s ease;
+				word-break: break-word;
+				opacity: 0.8;
+			}
+			.toc-link:hover {
+				color: var(--text);
+				opacity: 1;
+			}
+			.toc-link.is-active {
+				color: var(--text);
+				font-weight: 600;
+				opacity: 1;
+			}
+
+			/* 當螢幕寬度不足以同時容納正文（840px）與右側 TOC 時，自動隱藏 */
+			@media (max-width: 1280px) {
+				.toc-sidebar {
+					display: none;
 				}
+			}
+
+			@media (max-width: 640px) {
 				.article-header {
-					margin-bottom: 2.2rem;
+					margin-bottom: 1.8rem;
 				}
 				.post-title {
 					font-size: 1.75rem;
-					margin-bottom: 1rem;
+					margin-bottom: 0.6rem;
+				}
+				.hero-image {
+					margin-bottom: 2.2rem;
+				}
+				.hero-caption {
+					font-size: 0.82rem;
+					margin-top: 0.65rem;
 				}
 				.article-content {
 					font-size: 1rem;
@@ -108,13 +216,27 @@ const { title, description, pubDate, updatedDate, heroImage, gallery, tags = [],
 	<body>
 		<Header />
 		<main>
+			{showToc && (
+				<aside class="toc-sidebar" aria-label="目錄">
+					<nav>
+						<ul class="toc-list">
+							{filteredHeadings.map((heading) => {
+								const level = heading.depth - minDepth;
+								return (
+									<li class:list={['toc-item', `level-${level}`]}>
+										<a href={`#${heading.slug}`} class="toc-link" data-toc-slug={heading.slug}>
+											{heading.text}
+										</a>
+									</li>
+								);
+							})}
+						</ul>
+					</nav>
+				</aside>
+			)}
 			<article>
-				{heroImage && (
-					<div class="hero-image">
-						<Image src={heroImage} alt={title} />
-					</div>
-				)}
 				<header class="article-header">
+					<h1 class="post-title">{title}</h1>
 					<div class="post-meta">
 						<FormattedDate date={pubDate} />
 						{updatedDate && (
@@ -131,8 +253,13 @@ const { title, description, pubDate, updatedDate, heroImage, gallery, tags = [],
 							</div>
 						)}
 					</div>
-					<h1 class="post-title">{title}</h1>
 				</header>
+				{heroImage && (
+					<figure class="hero-image">
+						<Image src={heroImage} alt={title} />
+						{heroCaption && <figcaption class="hero-caption">{heroCaption}</figcaption>}
+					</figure>
+				)}
 				<div class="article-content">
 					<slot />
 				</div>
@@ -294,6 +421,52 @@ const { title, description, pubDate, updatedDate, heroImage, gallery, tags = [],
 
 			setupImageZoom();
 			document.addEventListener('astro:page-load', setupImageZoom);
+
+			function setupTocSpy() {
+				const tocLinks = document.querySelectorAll<HTMLAnchorElement>('.toc-link');
+				if (!tocLinks.length) return;
+
+				const slugs = Array.from(tocLinks).map((link) => link.dataset.tocSlug);
+				const headingElements = slugs
+					.map((slug) => document.getElementById(slug || ''))
+					.filter((el): el is HTMLElement => Boolean(el));
+
+				if (!headingElements.length) return;
+
+				let activeSlug = '';
+
+				const observer = new IntersectionObserver(
+					(entries) => {
+						const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+						if (visibleEntries.length > 0) {
+							visibleEntries.sort(
+								(a, b) => a.boundingClientRect.top - b.boundingClientRect.top
+							);
+							activeSlug = visibleEntries[0].target.id;
+							updateActive();
+						}
+					},
+					{
+						rootMargin: '-80px 0px -60% 0px',
+						threshold: 0,
+					}
+				);
+
+				headingElements.forEach((heading) => observer.observe(heading));
+
+				function updateActive() {
+					tocLinks.forEach((link) => {
+						if (link.dataset.tocSlug === activeSlug) {
+							link.classList.add('is-active');
+						} else {
+							link.classList.remove('is-active');
+						}
+					});
+				}
+			}
+
+			setupTocSpy();
+			document.addEventListener('astro:page-load', setupTocSpy);
 		</script>
 	</body>
 </html>
