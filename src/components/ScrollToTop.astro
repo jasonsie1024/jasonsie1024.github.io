@@ -1,0 +1,117 @@
+---
+---
+
+<button
+	id="scrollToTopBtn"
+	class="scroll-to-top"
+	aria-label="點擊回到頂部，長按切換深淺模式"
+	title="點擊：回到頁首 / 長按：切換深淺模式"
+>
+</button>
+
+<style>
+	.scroll-to-top {
+		position: fixed;
+		bottom: 5rem;
+		right: 1.5rem;
+		width: 4em;
+		height: 4em;
+		background-color: var(--btn-bg);
+		color: var(--btn-color);
+		border: none;
+		border-radius: 0; /* 純粹實心幾何方塊 */
+		cursor: pointer;
+		z-index: 999;
+		padding: 0;
+		opacity: 1; /* 常駐顯示 */
+		user-select: none;
+		-webkit-user-select: none;
+		-webkit-touch-callout: none;
+		transition: opacity 0.15s ease, background-color 0.25s ease, transform 0.1s ease;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+	}
+
+	/* 當螢幕寬度足以容納版面與外側按鈕時：精準錨定在內文右側邊界外，保持小間距 */
+	@media (min-width: 1040px) {
+		.scroll-to-top {
+			right: auto;
+			left: calc(50% + (var(--content-width) / 2) + 1.25rem);
+		}
+	}
+
+	/* 📱 手機端尺寸與邊距適度縮小 */
+	@media (max-width: 640px) {
+		.scroll-to-top {
+			width: 3.2em;
+			height: 3.2em;
+			bottom: 3rem;
+			right: 1.25rem;
+		}
+	}
+
+	.scroll-to-top:hover {
+		opacity: 0.8;
+	}
+
+	.scroll-to-top:active,
+	.scroll-to-top.pressing {
+		transform: scale(0.94);
+	}
+</style>
+
+<script>
+	function setupScrollToTop() {
+		const btn = document.getElementById('scrollToTopBtn');
+		if (!btn) return;
+
+		let pressTimer = null;
+		let isLongPress = false;
+
+		const startPress = () => {
+			isLongPress = false;
+			btn.classList.add('pressing');
+			pressTimer = setTimeout(() => {
+				isLongPress = true;
+				btn.classList.remove('pressing');
+				if (typeof window.__toggleTheme === 'function') {
+					window.__toggleTheme();
+				}
+			}, 500); // 500ms 長按判定
+		};
+
+		const cancelPress = () => {
+			if (pressTimer) {
+				clearTimeout(pressTimer);
+				pressTimer = null;
+			}
+			btn.classList.remove('pressing');
+		};
+
+		btn.addEventListener('pointerdown', (e) => {
+			if (e.button !== 0) return; // 僅響應主鍵
+			startPress();
+		});
+
+		btn.addEventListener('pointerup', () => {
+			cancelPress();
+			if (!isLongPress) {
+				// 短按：平滑滾動到頁首
+				window.scrollTo({
+					top: 0,
+					behavior: 'smooth',
+				});
+			}
+		});
+
+		btn.addEventListener('pointerleave', cancelPress);
+		btn.addEventListener('pointercancel', cancelPress);
+
+		// 防止長按時觸發行動裝置或桌面右鍵選單
+		btn.addEventListener('contextmenu', (e) => {
+			e.preventDefault();
+		});
+	}
+
+	setupScrollToTop();
+	document.addEventListener('astro:after-swap', setupScrollToTop);
+</script>

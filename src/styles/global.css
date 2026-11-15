@@ -1,0 +1,411 @@
+:root {
+	--font-serif: "Charter", "Bitstream Charter", "Charis SIL", "Noto Serif TC", "Source Han Serif TC", "Songti TC", Georgia, serif;
+	--font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", sans-serif;
+	--font-mono: "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
+
+	/* 淺色風格 (白底黑字) */
+	--bg: #ffffff;
+	--bg-subtle: #f8f8f8;
+	--text: #111111;
+	--text-muted: #4a4a4a;
+	--border: #e8e8e8;
+	--code-bg: #f4f4f4;
+	--content-width: 840px;
+
+	/* 按鈕風格 (淺色模式為黑方塊) */
+	--btn-bg: #000000;
+	--btn-color: #ffffff;
+}
+
+html.dark {
+	/* 深色風格 (黑底防眩光柔潤灰白，避免 OLED 高對比光暈) */
+	--bg: #0a0a0a;
+	--bg-subtle: #161616;
+	--text: #dedede;
+	--text-muted: #a0a0a0;
+	--border: #262626;
+	--code-bg: #1a1a1a;
+
+	/* 按鈕風格 (深色模式為白方塊) */
+	--btn-bg: #ffffff;
+	--btn-color: #000000;
+}
+
+/* 文字選取 highlight：純粹低調，不跳色 */
+::selection {
+	background-color: rgba(128, 128, 128, 0.25);
+	color: inherit;
+}
+
+*, *::before, *::after {
+	box-sizing: border-box;
+}
+
+html {
+	background-color: var(--bg);
+	color: var(--text);
+	font-family: var(--font-serif);
+	font-size: 18px; /* 電腦端舒適基底 */
+	line-height: 1.75; /* 凝聚段落內閱讀視線，避免行距過寬分散注意力 */
+	letter-spacing: 0.02em;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	transition: background-color 0.25s ease, color 0.25s ease;
+	overflow-x: hidden;
+	width: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	min-height: 100vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--bg);
+	color: var(--text);
+	overflow-x: hidden;
+}
+
+main {
+	width: 100%;
+	max-width: var(--content-width);
+	margin: 0 auto;
+	padding: 3.5rem 1.5rem 5.5rem;
+	flex: 1;
+	min-width: 0; /* 防止 flex 子元素被寬表格或長字元撐開破版 */
+}
+
+/* Headings - 無底線，純留白，自動優化斷行避免孤字 */
+h1, h2, h3, h4, h5, h6 {
+	color: var(--text);
+	font-weight: 700;
+	line-height: 1.35;
+	margin-top: 2.5rem;
+	margin-bottom: 0.8rem;
+	letter-spacing: 0.02em;
+	text-wrap: pretty;
+}
+
+h1 {
+	font-size: 2.1rem;
+}
+
+h2 {
+	font-size: 1.6rem;
+}
+
+h3 {
+	font-size: 1.35rem;
+}
+
+/* Links: 不換顏色，hover 時僅微調 opacity: 0.8 */
+a {
+	color: var(--text);
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 4px;
+	transition: opacity 0.15s ease;
+}
+
+a:hover {
+	opacity: 0.8;
+}
+
+/* Paragraphs and Text */
+p {
+	margin: 0 0 2.2rem 0; /* 顯著拉開段落間距，營造散文段落間的留白呼吸節奏 */
+	word-break: break-word;
+}
+
+strong, b {
+	font-weight: 700;
+}
+
+em, i {
+	font-style: italic;
+}
+
+/* Blockquotes & Notes: 使用高對比文字顏色，完全清晰紮實 */
+blockquote {
+	border-left: 3px solid var(--text);
+	margin: 2.2rem 0;
+	padding: 0.9rem 1.4rem;
+	background-color: var(--bg-subtle);
+	color: var(--text);
+	border-radius: 0 4px 4px 0;
+}
+
+blockquote p {
+	color: var(--text);
+	margin-bottom: 0.8rem;
+	opacity: 1;
+}
+
+blockquote p:last-child {
+	margin-bottom: 0;
+}
+
+/* Code & Pre */
+code {
+	font-family: var(--font-mono);
+	font-size: 0.88em;
+	padding: 0.15em 0.4em;
+	background-color: var(--code-bg);
+	border-radius: 3px;
+	border: 1px solid var(--border);
+	color: var(--text);
+	word-break: break-word;
+}
+
+pre {
+	font-family: var(--font-mono);
+	font-size: 0.88rem;
+	padding: 1.25rem;
+	background-color: var(--code-bg);
+	border-radius: 4px;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	max-width: 100%;
+	line-height: 1.6;
+	margin: 2rem 0;
+	border: 1px solid var(--border);
+	color: var(--text);
+}
+
+pre code {
+	padding: 0;
+	background-color: transparent;
+	font-size: inherit;
+	border: none;
+	color: inherit;
+	word-break: normal;
+}
+
+/* Lists */
+ul, ol {
+	margin: 0 0 1.6rem 0;
+	padding-left: 1.8rem;
+}
+
+li {
+	margin-bottom: 0.45rem;
+}
+
+/* Task Lists: 移除圓點，自訂精緻極簡 Checkbox 與完成狀態分級 */
+ul.contains-task-list {
+	list-style: none;
+	padding-left: 0;
+	margin: 1.8rem 0;
+}
+
+li.task-list-item {
+	list-style: none;
+	margin-bottom: 0.6rem;
+	color: var(--text);
+	transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+/* 自訂純幾何極簡 Checkbox：精確依據行內字形中線垂直對齊 */
+li.task-list-item input[type="checkbox"] {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 0.92em;
+	height: 0.92em;
+	border: 1.5px solid var(--text-muted);
+	border-radius: 2px;
+	background-color: transparent;
+	margin: 0;
+	margin-right: 0.65rem;
+	cursor: default;
+	display: inline-block;
+	vertical-align: middle;
+	transform: translateY(-0.11em);
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+/* 未完成：清晰空心線條方框 */
+li.task-list-item input[type="checkbox"]:not(:checked) {
+	border-color: var(--text-muted);
+	background-color: transparent;
+}
+
+/* 已完成：純粹實心填色幾何方塊（無勾勾），呼應幾何極簡美學 */
+li.task-list-item input[type="checkbox"]:checked {
+	border-color: var(--text-muted);
+	background-color: var(--text-muted);
+}
+
+/* 已完成的文字項目：淡化為次要色，刪除線與文字同色 */
+li.task-list-item:has(input:checked) {
+	color: var(--text-muted);
+	text-decoration: line-through;
+	text-decoration-thickness: 1px;
+	text-decoration-color: currentColor;
+	opacity: 0.6;
+}
+
+/* Images */
+img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 4px;
+	margin: 1.8rem 0;
+}
+
+/* Divider: 採用純留白替代硬性橫線 */
+hr {
+	border: none;
+	margin: 3.5rem 0;
+}
+
+/* Tables: 表格支援在手機窄螢幕上橫向平滑滾動，避免撐破視窗寬度 */
+table {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	border-collapse: collapse;
+	margin: 2.2rem 0;
+}
+
+th, td {
+	padding: 0.7rem 0.9rem;
+	border-bottom: 1px solid var(--border);
+	text-align: left;
+}
+
+th {
+	font-weight: 700;
+}
+
+/* Utilities */
+.text-muted {
+	color: var(--text-muted);
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Footnotes 註腳區塊極簡排版 */
+.footnotes {
+	margin-top: 4.5rem;
+	padding-top: 1.8rem;
+	border-top: 1px solid var(--border);
+	font-size: 0.88rem;
+	color: var(--text-muted);
+}
+
+.footnotes ol {
+	padding-left: 1.3rem;
+	margin: 0;
+}
+
+.footnotes li {
+	margin-bottom: 0.65rem;
+	line-height: 1.7;
+	color: var(--text-muted);
+}
+
+.footnotes p {
+	margin-bottom: 0;
+	color: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+/* Footnote 內文上標連結 */
+[data-footnote-ref] {
+	font-size: 0.75em;
+	vertical-align: super;
+	line-height: 0;
+	padding: 0 0.18em;
+	text-decoration: none;
+	color: var(--text-muted);
+	font-weight: 600;
+	transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+[data-footnote-ref]:hover {
+	color: var(--text);
+	opacity: 0.8;
+}
+
+/* Footnote 返回按鈕：極簡優雅的 SVG 符號替代 emoji */
+.data-footnote-backref {
+	display: inline-flex;
+	align-items: center;
+	font-size: 0; /* 隱藏預設 ↩ 符號文字 */
+	text-decoration: none !important;
+	color: var(--text-muted);
+	margin-left: 0.35rem;
+	vertical-align: middle;
+	transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.data-footnote-backref::before {
+	content: '';
+	display: inline-block;
+	width: 0.82rem;
+	height: 0.82rem;
+	background-color: currentColor;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 14 4 9 9 4'%3E%3C/polyline%3E%3Cpath d='M20 20v-7a4 4 0 0 0-4-4H4'%3E%3C/path%3E%3C/svg%3E") no-repeat center / contain;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 14 4 9 9 4'%3E%3C/polyline%3E%3Cpath d='M20 20v-7a4 4 0 0 0-4-4H4'%3E%3C/path%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+.data-footnote-backref sup {
+	font-size: 0.7rem;
+	color: currentColor;
+	margin-left: 2px;
+}
+
+.data-footnote-backref:hover {
+	color: var(--text);
+	opacity: 0.8;
+}
+
+/* 📱 手機端響應式排版優化 */
+@media (max-width: 640px) {
+	html {
+		font-size: 16px; /* 手機字級調降為標準 16px */
+		line-height: 1.7;
+	}
+
+	main {
+		padding: 2rem 1.25rem 5.5rem;
+	}
+
+	h1 {
+		font-size: 1.75rem;
+		margin-top: 2rem;
+	}
+
+	h2 {
+		font-size: 1.4rem;
+		margin-top: 2rem;
+	}
+
+	h3 {
+		font-size: 1.2rem;
+	}
+
+	p {
+		margin-bottom: 1.8rem;
+	}
+
+	blockquote {
+		margin: 1.8rem 0;
+		padding: 0.7rem 1.1rem;
+	}
+}

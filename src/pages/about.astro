@@ -1,0 +1,48 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+	<head>
+		<BaseHead title={`關於 · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			.about-title {
+				margin-top: 0;
+				margin-bottom: 2.8rem;
+				font-size: 1.85rem;
+				border: none;
+				padding-bottom: 0;
+			}
+			.about-content {
+				line-height: 1.9;
+				font-size: 1.05rem;
+				min-height: 30vh;
+			}
+
+			@media (max-width: 640px) {
+				.about-title {
+					font-size: 1.6rem;
+					margin-bottom: 2rem;
+				}
+				.about-content {
+					font-size: 1rem;
+					line-height: 1.8;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1 class="about-title">關於</h1>
+			<article class="about-content">
+				<!-- 請在此填入關於你的自述或介紹 -->
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>

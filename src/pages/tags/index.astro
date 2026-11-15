@@ -1,0 +1,99 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = await getCollection('blog');
+
+// 計算每個 tag 的出現次數
+const tagCounts = posts.reduce((acc: Record<string, number>, post) => {
+	(post.data.tags || []).forEach((tag: string) => {
+		acc[tag] = (acc[tag] || 0) + 1;
+	});
+	return acc;
+}, {});
+
+const sortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]);
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+	<head>
+		<BaseHead title={`所有標籤 · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			.page-title {
+				margin-top: 0;
+				margin-bottom: 2.5rem;
+				font-size: 1.85rem;
+				border: none;
+				padding-bottom: 0;
+			}
+			.tag-cloud {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1.5rem;
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.tag-item {
+				margin: 0;
+			}
+			.tag-link {
+				color: var(--text);
+				text-decoration: none;
+				font-size: 1.15rem;
+				transition: opacity 0.15s ease;
+			}
+			.tag-link:hover {
+				opacity: 0.8;
+			}
+			.tag-count {
+				color: var(--text-muted);
+				font-size: 0.88rem;
+				margin-left: 0.25rem;
+			}
+			.empty-state {
+				color: var(--text-muted);
+				padding: 2rem 0;
+			}
+
+			@media (max-width: 640px) {
+				.page-title {
+					font-size: 1.6rem;
+					margin-bottom: 2rem;
+				}
+				.tag-link {
+					font-size: 1.05rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1 class="page-title">標籤總覽</h1>
+
+			{
+				sortedTags.length === 0 ? (
+					<p class="empty-state">目前尚無任何標籤。</p>
+				) : (
+					<ul class="tag-cloud">
+						{sortedTags.map((tag) => (
+							<li class="tag-item">
+								<a href={`/tags/${tag}`} class="tag-link">
+									#{tag}
+									<span class="tag-count">({tagCounts[tag]})</span>
+								</a>
+							</li>
+						))}
+					</ul>
+				)
+			}
+		</main>
+		<Footer />
+	</body>
+</html>
+
