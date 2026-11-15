@@ -4,10 +4,10 @@ import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { SITE_DESCRIPTION, SITE_TITLE, filterDrafts } from '../../consts';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog', ({ data }) => !data.draft);
+	const posts = await getCollection('blog', filterDrafts);
 	const uniqueTags = [...new Set(posts.flatMap((post) => post.data.tags || []))];
 
 	return uniqueTags.map((tag) => {

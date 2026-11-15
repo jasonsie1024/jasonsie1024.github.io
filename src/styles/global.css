@@ -46,6 +46,7 @@ html {
 	color: var(--text);
 	font-family: var(--font-serif);
 	font-size: 18px; /* 電腦端舒適基底 */
+	font-weight: 500; /* 思源宋體 Medium：橫畫墨色紮實，消除光滲侵蝕與閱讀吃力感 */
 	line-height: 1.75; /* 凝聚段落內閱讀視線，避免行距過寬分散注意力 */
 	letter-spacing: 0.02em;
 	-webkit-font-smoothing: antialiased;
