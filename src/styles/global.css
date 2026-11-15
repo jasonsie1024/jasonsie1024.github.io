@@ -247,12 +247,45 @@ li.task-list-item:has(input:checked) {
 	opacity: 0.6;
 }
 
-/* Images */
+/* Images & Figures */
 img {
 	max-width: 100%;
 	height: auto;
-	border-radius: 4px;
-	margin: 1.8rem 0;
+	border-radius: 0;
+	display: block;
+	margin: 1.8rem auto;
+}
+
+figure {
+	margin: 2.5rem 0;
+	text-align: center;
+}
+
+figure img {
+	margin: 0 auto 0.8rem auto;
+}
+
+figcaption {
+	font-size: 0.88rem;
+	color: var(--text-muted);
+	letter-spacing: 0.02em;
+	line-height: 1.6;
+}
+
+/* Image Zoom Lightbox */
+.image-zoom-overlay {
+	position: fixed;
+	inset: 0;
+	background: var(--bg);
+	opacity: 0;
+	pointer-events: none;
+	z-index: 9990;
+	transition: opacity 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.image-zoom-overlay.is-active {
+	opacity: 1;
+	pointer-events: auto;
 }
 
 /* Divider: 採用純留白替代硬性橫線 */

@@ -55,11 +55,14 @@ const { title, description, pubDate, updatedDate, heroImage, tags = [], draft = 
 				line-height: 1.35;
 			}
 			.hero-image {
-				margin-bottom: 2.5rem;
+				margin-bottom: 2.8rem;
 			}
 			.hero-image img {
 				display: block;
-				border-radius: 4px;
+				width: 100%;
+				height: auto;
+				border-radius: 0;
+				margin: 0;
 			}
 			.article-content {
 				line-height: 1.78;
@@ -80,6 +83,9 @@ const { title, description, pubDate, updatedDate, heroImage, tags = [], draft = 
 			}
 
 			@media (max-width: 640px) {
+				.hero-image {
+					margin-bottom: 1.8rem;
+				}
 				.article-header {
 					margin-bottom: 2.2rem;
 				}
@@ -102,6 +108,11 @@ const { title, description, pubDate, updatedDate, heroImage, tags = [], draft = 
 		<Header />
 		<main>
 			<article>
+				{heroImage && (
+					<div class="hero-image">
+						<Image src={heroImage} alt={title} />
+					</div>
+				)}
 				<header class="article-header">
 					<div class="post-meta">
 						<FormattedDate date={pubDate} />
@@ -121,11 +132,6 @@ const { title, description, pubDate, updatedDate, heroImage, tags = [], draft = 
 					</div>
 					<h1 class="post-title">{title}</h1>
 				</header>
-				{heroImage && (
-					<div class="hero-image">
-						<Image width={1020} height={510} src={heroImage} alt="" />
-					</div>
-				)}
 				<div class="article-content">
 					<slot />
 				</div>
@@ -135,5 +141,155 @@ const { title, description, pubDate, updatedDate, heroImage, tags = [], draft = 
 			</article>
 		</main>
 		<Footer />
+
+		<script>
+			function setupImageZoom() {
+				const images = document.querySelectorAll<HTMLImageElement>(
+					'.hero-image img, .article-content img'
+				);
+
+				let overlay = document.querySelector<HTMLElement>('.image-zoom-overlay');
+				if (!overlay) {
+					overlay = document.createElement('div');
+					overlay.className = 'image-zoom-overlay';
+					document.body.appendChild(overlay);
+				}
+
+				let activeZoomClose: (() => void) | null = null;
+
+				images.forEach((img) => {
+					// 避免重複綁定
+					if (img.dataset.zoomReady) return;
+					img.dataset.zoomReady = 'true';
+
+					img.addEventListener('click', (e) => {
+						e.stopPropagation();
+						if (activeZoomClose) {
+							activeZoomClose();
+							return;
+						}
+
+						const rect = img.getBoundingClientRect();
+
+						// 建立放大的圖片節點（FLIP 動畫）
+						const clone = document.createElement('img');
+						clone.src = img.currentSrc || img.src;
+						clone.alt = img.alt || '';
+						clone.style.position = 'fixed';
+						clone.style.left = `${rect.left}px`;
+						clone.style.top = `${rect.top}px`;
+						clone.style.width = `${rect.width}px`;
+						clone.style.height = `${rect.height}px`;
+						clone.style.margin = '0';
+						clone.style.padding = '0';
+						clone.style.borderRadius = '0';
+						clone.style.border = 'none';
+						clone.style.outline = 'none';
+						clone.style.zIndex = '9995';
+						clone.style.transformOrigin = 'top left';
+						clone.style.transition = 'transform 0.32s cubic-bezier(0.2, 0, 0.2, 1)';
+						clone.style.willChange = 'transform';
+						clone.style.display = 'block';
+						clone.style.maxWidth = 'none';
+						clone.style.maxHeight = 'none';
+						clone.style.objectFit = 'contain';
+
+						// 計算放大到全螢幕的尺寸：最窄邊保留約 5em（左右/上下各約 2.5em）
+						const vw = window.innerWidth;
+						const vh = window.innerHeight;
+						const rootFs = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+						const sideMargin = Math.min(vw, vh) < 640 ? 16 : 2.5 * rootFs;
+						const maxW = vw - sideMargin * 2;
+						const maxH = vh - sideMargin * 2;
+
+						const aspect = (img.naturalWidth || rect.width) / (img.naturalHeight || rect.height);
+						let targetW = maxW;
+						let targetH = targetW / aspect;
+						if (targetH > maxH) {
+							targetH = maxH;
+							targetW = targetH * aspect;
+						}
+
+						const targetLeft = (vw - targetW) / 2;
+						const targetTop = (vh - targetH) / 2;
+						const scaleX = targetW / rect.width;
+						const scaleY = targetH / rect.height;
+						const transX = targetLeft - rect.left;
+						const transY = targetTop - rect.top;
+
+						img.style.visibility = 'hidden';
+						document.body.appendChild(clone);
+
+						// 顯示背景遮罩
+						if (overlay) overlay.classList.add('is-active');
+
+						// 動畫展開
+						requestAnimationFrame(() => {
+							clone.style.transform = `translate3d(${transX}px, ${transY}px, 0) scale(${scaleX}, ${scaleY})`;
+						});
+
+						let isClosing = false;
+						const closeZoom = () => {
+							if (isClosing) return;
+							isClosing = true;
+
+							const currRect = img.getBoundingClientRect();
+							const closeScaleX = currRect.width / rect.width;
+							const closeScaleY = currRect.height / rect.height;
+							const closeTransX = currRect.left - rect.left;
+							const closeTransY = currRect.top - rect.top;
+
+							clone.style.transform = `translate3d(${closeTransX}px, ${closeTransY}px, 0) scale(${closeScaleX}, ${closeScaleY})`;
+							if (overlay) overlay.classList.remove('is-active');
+
+							let cleaned = false;
+							const cleanup = () => {
+								if (cleaned) return;
+								cleaned = true;
+								if (clone.parentNode) clone.parentNode.removeChild(clone);
+								img.style.visibility = '';
+								window.removeEventListener('keydown', handleKey);
+								window.removeEventListener('scroll', handleScroll);
+								activeZoomClose = null;
+							};
+
+							clone.addEventListener('transitionend', cleanup, { once: true });
+							setTimeout(cleanup, 360);
+						};
+
+						activeZoomClose = closeZoom;
+
+						const handleKey = (ev: KeyboardEvent) => {
+							if (ev.key === 'Escape') closeZoom();
+						};
+
+						const startScrollY = window.scrollY;
+						const handleScroll = () => {
+							if (Math.abs(window.scrollY - startScrollY) > 40) {
+								closeZoom();
+							}
+						};
+
+						clone.addEventListener('click', (ev) => {
+							ev.stopPropagation();
+							closeZoom();
+						});
+
+						if (overlay) {
+							overlay.onclick = (ev) => {
+								ev.stopPropagation();
+								closeZoom();
+							};
+						}
+
+						window.addEventListener('keydown', handleKey);
+						window.addEventListener('scroll', handleScroll, { passive: true });
+					});
+				});
+			}
+
+			setupImageZoom();
+			document.addEventListener('astro:page-load', setupImageZoom);
+		</script>
 	</body>
 </html>
