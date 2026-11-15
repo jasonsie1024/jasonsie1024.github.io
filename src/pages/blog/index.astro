@@ -6,7 +6,7 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
-const posts = (await getCollection('blog')).sort(
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
@@ -132,33 +132,37 @@ const allTags = [...new Set(posts.flatMap((post) => post.data.tags || []))];
 				</nav>
 			)}
 
-			<ul class="post-list">
-				{
-					posts.map((post) => (
-						<li class="post-item">
-							<a href={`/blog/${post.id}/`} class="post-link">
-								{post.data.title}
-							</a>
-							<div class="post-meta">
-								<FormattedDate date={post.data.pubDate} />
-								{post.data.draft && <span class="draft-badge">草稿</span>}
-								{post.data.tags && post.data.tags.length > 0 && (
-									<div class="tags">
-										{post.data.tags.map((tag: string) => (
-											<a href={`/tags/${tag}`} class="tag-link">
-												#{tag}
-											</a>
-										))}
-									</div>
+			{
+				posts.length === 0 ? (
+					<p class="empty-state">尚無發布的文章。</p>
+				) : (
+					<ul class="post-list">
+						{posts.map((post) => (
+							<li class="post-item">
+								<a href={`/blog/${post.id}/`} class="post-link">
+									{post.data.title}
+								</a>
+								<div class="post-meta">
+									<FormattedDate date={post.data.pubDate} />
+									{post.data.draft && <span class="draft-badge">草稿</span>}
+									{post.data.tags && post.data.tags.length > 0 && (
+										<div class="tags">
+											{post.data.tags.map((tag: string) => (
+												<a href={`/tags/${tag}`} class="tag-link">
+													#{tag}
+												</a>
+											))}
+										</div>
+									)}
+								</div>
+								{post.data.description && (
+									<p class="post-desc">{post.data.description}</p>
 								)}
-							</div>
-							{post.data.description && (
-								<p class="post-desc">{post.data.description}</p>
-							)}
-						</li>
-					))
-				}
-			</ul>
+							</li>
+						))}
+					</ul>
+				)
+			}
 		</main>
 		<Footer />
 	</body>
