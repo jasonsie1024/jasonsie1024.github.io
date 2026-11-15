@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="zh-Hant" data-astro-cid-tldeq5d5><head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link id="siteFavicon" rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Jason 的日常雜記" href="https://jasonsie1024.github.io/rss.xml"><meta name="generator" content="Astro v7.4.12"><!-- Theme & Favicon Controller: 自動遵循系統 Theme，並隨切換即時變更 Favicon 顏色 --><script>
+	function updateFavicon(isDark) {
+		const color = isDark ? '#ffffff' : '#000000';
+		const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,15.36 90,84.64 10,84.64" fill="${color}" /></svg>`;
+		const link = document.getElementById('siteFavicon');
+		if (link) {
+			link.href = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+		}
+	}
+
+	function applyTheme(theme) {
+		const isDark = theme === 'dark';
+		if (isDark) {
+			document.documentElement.classList.add('dark');
+		} else {
+			document.documentElement.classList.remove('dark');
+		}
+		updateFavicon(isDark);
+	}
+
+	// 1. 初始化：優先依據儲存偏好，若未曾手動設定則自動遵循系統偏好
+	const savedTheme = localStorage.getItem('theme');
+	const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+	const currentTheme = savedTheme || (systemDark ? 'dark' : 'light');
+
+	applyTheme(currentTheme);
+
+	// 2. 監聽作業系統深淺色變化（若使用者尚未手動固定設定）
+	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+		if (!localStorage.getItem('theme')) {
+			applyTheme(e.matches ? 'dark' : 'light');
+		}
+	});
+
+	// 3. 全域主題切換 API（供按鈕長按呼叫）
+	window.__toggleTheme = function () {
+		const isDark = document.documentElement.classList.toggle('dark');
+		const newTheme = isDark ? 'dark' : 'light';
+		localStorage.setItem('theme', newTheme);
+		updateFavicon(isDark);
+		return isDark;
+	};
+</script><!-- Google Fonts: 思源宋體 (Noto Serif TC) --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet"><!-- Canonical URL --><link rel="canonical" href="https://jasonsie1024.github.io/blog/hackmd-template/"><!-- Primary Meta Tags --><title>HackMD 格式範例與長文排版預覽</title><meta name="description" content="這篇文件包含一段完整的長篇文學隨筆，用來檢驗行距節奏、字體搭配與閱讀舒適度；文末同時保留常用的 Markdown 與 HackMD 排版語法範例。"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://jasonsie1024.github.io/blog/hackmd-template/"><meta property="og:title" content="HackMD 格式範例與長文排版預覽"><meta property="og:description" content="這篇文件包含一段完整的長篇文學隨筆，用來檢驗行距節奏、字體搭配與閱讀舒適度；文末同時保留常用的 Markdown 與 HackMD 排版語法範例。"><meta property="og:image" content="https://jasonsie1024.github.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://jasonsie1024.github.io/blog/hackmd-template/"><meta property="twitter:title" content="HackMD 格式範例與長文排版預覽"><meta property="twitter:description" content="這篇文件包含一段完整的長篇文學隨筆，用來檢驗行距節奏、字體搭配與閱讀舒適度；文末同時保留常用的 Markdown 與 HackMD 排版語法範例。"><meta property="twitter:image" content="https://jasonsie1024.github.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><link rel="stylesheet" href="/_astro/Header.DJpE3jUR.css"><style>.article-header[data-astro-cid-tldeq5d5]{margin-bottom:3.5rem}.post-meta[data-astro-cid-tldeq5d5]{color:var(--text-muted);letter-spacing:.03em;flex-wrap:wrap;align-items:center;gap:.8rem;margin-bottom:.6rem;font-size:.9rem;display:flex}.draft-badge[data-astro-cid-tldeq5d5]{border:1px solid var(--border);color:var(--text-muted);border-radius:2px;padding:.1em .4em;font-size:.75rem}.tags[data-astro-cid-tldeq5d5]{gap:.6rem;display:flex}.tag-link[data-astro-cid-tldeq5d5]{color:var(--text-muted);font-size:.88rem;text-decoration:none;transition:opacity .15s}.tag-link[data-astro-cid-tldeq5d5]:hover{opacity:.8}.post-title[data-astro-cid-tldeq5d5]{margin-top:0;margin-bottom:1.5rem;font-size:2.2rem;line-height:1.35}.hero-image[data-astro-cid-tldeq5d5]{margin-bottom:2.5rem}.hero-image[data-astro-cid-tldeq5d5] img[data-astro-cid-tldeq5d5]{border-radius:4px;display:block}.article-content[data-astro-cid-tldeq5d5]{line-height:1.78}.article-footer[data-astro-cid-tldeq5d5]{border:none;margin-top:4.5rem;padding-top:1rem}.back-link[data-astro-cid-tldeq5d5]{color:var(--text-muted);font-size:.95rem;text-decoration:none;transition:opacity .15s}.back-link[data-astro-cid-tldeq5d5]:hover{opacity:.8}@media (width<=640px){.article-header[data-astro-cid-tldeq5d5]{margin-bottom:2.2rem}.post-title[data-astro-cid-tldeq5d5]{margin-bottom:1rem;font-size:1.75rem}.article-content[data-astro-cid-tldeq5d5]{font-size:1rem;line-height:1.72}.article-footer[data-astro-cid-tldeq5d5]{margin-top:3.5rem}}
+</style></head><body data-astro-cid-tldeq5d5><header data-astro-cid-nen7h5rs><nav data-astro-cid-nen7h5rs><div class="site-brand" data-astro-cid-nen7h5rs><a href="/" class="brand-link" data-astro-cid-nen7h5rs>Jason 的日常雜記</a></div><div class="internal-links" data-astro-cid-nen7h5rs><a href="/" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>首頁</a><a href="/blog" class="active" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>文章</a><a href="/tags" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>標籤</a><a href="/about" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>關於</a></div></nav></header><main data-astro-cid-tldeq5d5><article data-astro-cid-tldeq5d5><header class="article-header" data-astro-cid-tldeq5d5><div class="post-meta" data-astro-cid-tldeq5d5><time datetime="2026-11-15T00:00:00.000Z">Nov 15, 2026</time><span class="draft-badge" data-astro-cid-tldeq5d5>草稿</span><div class="tags" data-astro-cid-tldeq5d5><a href="/tags/HackMD" class="tag-link" data-astro-cid-tldeq5d5>#HackMD</a><a href="/tags/Markdown" class="tag-link" data-astro-cid-tldeq5d5>#Markdown</a><a href="/tags/範例" class="tag-link" data-astro-cid-tldeq5d5>#範例</a></div></div><h1 class="post-title" data-astro-cid-tldeq5d5>HackMD 格式範例與長文排版預覽</h1></header><div class="article-content" data-astro-cid-tldeq5d5><h2 id="第一部分長篇隨筆閱讀示範">第一部分：長篇隨筆閱讀示範</h2>
+<h3 id="在時間的褶皺裡慢步">在時間的褶皺裡慢步</h3>
+<p>秋末的午後，陽光斜切過百葉窗的縫隙，在桌面上投下斑駁如琴鍵般的光軌。城市依然以其慣常的頻率運轉著，車流的喧囂被厚重的雙層玻璃濾成一種微弱的白噪音，像是遠方海浪永無止境的退潮。在這樣一個尋常的片刻裡，人很容易產生一種錯覺——彷彿時間並非均勻流逝的河流，而是充滿了褶皺、停頓與留白的棉紙。</p>
+<p>我們身處在一個極度講求即時響應（Instant Response）的世界。演算法精確地計算著每一次指尖滑動的毫秒差，推播通知如同午後驟雨般密集落下，將人的注意力切割成無數難以拼湊的碎屑。每個人都在趕往某個尚未被命名的下一個目標，彷彿只要慢了一步，就會被飛速向前的時代齒輪無情拋下。</p>
+<blockquote>
+<p>「現代人最大的貧困，往往不是物質上的匱乏，而是失去了與自己安靜獨處的耐心。我們習慣了向世界索取刺激，卻忘記了文字最初的功用，其實是為了讓喧鬧的心靈重新沉澱下來。」<br>
+—— 摘自《安靜的藝術》（<em>The Art of Stillness</em>）</p>
+</blockquote>
+<p>然而，語言與文字的本質，從來就不是為了迎合速度而生的。真正的思考往往發生在那些「沒有產出」的空白時刻——走在落葉未掃的小徑上、注視著熱水注入咖啡粉時膨脹的褐色氣泡、或是在深夜的檯燈下，反覆推敲一個段落末尾的句讀。</p>
+<p>當文字被賦予足夠的行距與留白，閱讀便不再是一場資訊吞吐的競賽，而轉化為一種近乎冥想的感官體驗。思源宋體的起筆與折角，在 Charter 溫潤的英文字母襯托下，帶有一種手工印版時代特有的穩重。它們靜靜排列在潔白的頁面上，既不張揚，也不急於證明自己，只是耐心地等待著某雙視線的停留。</p>
+<p>生活也是如此。很多幽微的情緒與記憶，在當下看似微不足道，卻往往在數個月、甚至數年後的某個黃昏，突然浮出水面，成為照亮前路的一抹微光。</p>
+<hr>
+<h2 id="第二部分hackmd-常用語法與元件樣式">第二部分：HackMD 常用語法與元件樣式</h2>
+<p>以下展示文章常用的各類 Markdown 與 HackMD 元素：</p>
+<h3 id="各級標題層次">各級標題層次</h3>
+<h1 id="h1-大標題展示">H1 大標題展示</h1>
+<h2 id="h2-二級標題展示">H2 二級標題展示</h2>
+<h3 id="h3-三級標題展示">H3 三級標題展示</h3>
+<h4 id="h4-四級標題展示">H4 四級標題展示</h4>
+<hr>
+<h3 id="文字樣式與行內元素">文字樣式與行內元素</h3>
+<ul>
+<li><strong>粗體字 (Bold Text)</strong>：用於強調關鍵詞句或核心觀點。</li>
+<li><em>斜體字 (Italic Text)</em>：用於書名、外文詞彙或語氣轉折。</li>
+<li><del>刪除線 (Strikethrough)</del>：用於修改標註或自我調侃。</li>
+<li><code>行內重點 (Inline Text)</code>：用於專有名詞或重點詞彙的視覺聚焦。</li>
+</ul>
+<hr>
+<h3 id="清單樣式">清單樣式</h3>
+<h4 id="無序清單">無序清單</h4>
+<ul>
+<li>漫步於清晨安靜的巷弄</li>
+<li>翻閱一本塵封已久的舊詩集
+<ul>
+<li>感受紙張邊緣微微泛黃的質地</li>
+<li>重新讀懂當年未曾領會的隱喻</li>
+</ul>
+</li>
+<li>在手帳上記下一句偶得的日常片段</li>
+</ul>
+<h4 id="有序清單">有序清單</h4>
+<ol>
+<li>燒開一壺清水，靜置半分鐘使水溫回降至 92 度</li>
+<li>緩慢注入細水流，由中心向外畫圓悶蒸</li>
+<li>靜待三十秒，感受乾香與濕香的交替變化</li>
+</ol>
+<h4 id="待辦事項清單-task-list">待辦事項清單 (Task List)</h4>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> 重構網誌為 Astro 靜態框架</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 配置 Charter 英文與思源宋體中文排版</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> 實作右下角幾何方塊與長按夜間模式切換</li>
+<li class="task-list-item"><input type="checkbox" disabled> 撰寫第一篇正式原創散文</li>
+</ul>
+<hr>
+<h3 id="表格樣式-table">表格樣式 (Table)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left">項目</th>
+<th style="text-align: center">規格 / 特色</th>
+<th style="text-align: right">說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">內文寬度</td>
+<td style="text-align: center">840px</td>
+<td style="text-align: right">提供大器而舒適的視線移動範圍</td>
+</tr>
+<tr>
+<td style="text-align: left">行高節奏</td>
+<td style="text-align: center">1.9</td>
+<td style="text-align: right">長文換行從容，眼球不易疲倦</td>
+</tr>
+<tr>
+<td style="text-align: left">斷行韻律</td>
+<td style="text-align: center">自然流式排版</td>
+<td style="text-align: right">繁體中文全幅舒展，閱讀不中斷</td>
+</tr>
+<tr>
+<td style="text-align: left">淺色模式</td>
+<td style="text-align: center">#ffffff / #111111</td>
+<td style="text-align: right">經典極簡黑白高對比</td>
+</tr>
+<tr>
+<td style="text-align: left">深色模式</td>
+<td style="text-align: center">#0a0a0a / #dedede</td>
+<td style="text-align: right">防眩光柔潤灰白，OLED 護眼</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="註腳排版-footnotes">註腳排版 (Footnotes)</h3>
+<p>文字可以帶有細微的上標註釋<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup>，點擊即可平滑跳轉到文末的詳細解說<sup><a href="#user-content-fn-2" id="user-content-fnref-2" data-footnote-ref aria-describedby="footnote-label">2</a></sup>，文末的返回符號採用極簡 SVG 圖示，替代傳統的 Emoji。</p>
+<section data-footnotes class="footnotes"><h2 class="sr-only" id="footnote-label">Footnotes</h2>
+<ol>
+<li id="user-content-fn-1">
+<p>註腳上標經過精細縮放，不會破壞原有正文的 1.9 行距韻律。 <a href="#user-content-fnref-1" data-footnote-backref="" aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
+</li>
+<li id="user-content-fn-2">
+<p>註腳通常用於引用書籍出處、補充歷史背景，或是作者在正文之外輕聲說的一句私語。 <a href="#user-content-fnref-2" data-footnote-backref="" aria-label="Back to reference 2" class="data-footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+</div><footer class="article-footer" data-astro-cid-tldeq5d5><a href="/blog" class="back-link" data-astro-cid-tldeq5d5>← 返回文章列表</a></footer></article></main><footer data-astro-cid-jo6i4kqk><div class="footer-content" data-astro-cid-jo6i4kqk><p class="copyright" data-astro-cid-jo6i4kqk>@ 2026 Jason Sie.</p><div class="links" data-astro-cid-jo6i4kqk><a href="/rss.xml" data-astro-cid-jo6i4kqk>RSS</a></div></div></footer><button id="scrollToTopBtn" class="scroll-to-top" aria-label="點擊回到頂部，長按切換深淺模式" title="點擊：回到頁首 / 長按：切換深淺模式" data-astro-cid-p774adf7></button><script type="module">function e(){let e=document.getElementById(`scrollToTopBtn`);if(!e)return;let t=null,n=!1,r=()=>{n=!1,e.classList.add(`pressing`),t=setTimeout(()=>{n=!0,e.classList.remove(`pressing`),typeof window.__toggleTheme==`function`&&window.__toggleTheme()},500)},i=()=>{t&&=(clearTimeout(t),null),e.classList.remove(`pressing`)};e.addEventListener(`pointerdown`,e=>{e.button===0&&r()}),e.addEventListener(`pointerup`,()=>{i(),n||window.scrollTo({top:0,behavior:`smooth`})}),e.addEventListener(`pointerleave`,i),e.addEventListener(`pointercancel`,i),e.addEventListener(`contextmenu`,e=>{e.preventDefault()})}e(),document.addEventListener(`astro:after-swap`,e);</script></body></html>

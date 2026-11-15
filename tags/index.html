@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-Hant" data-astro-cid-wybof3wm><head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link id="siteFavicon" rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Jason 的日常雜記" href="https://jasonsie1024.github.io/rss.xml"><meta name="generator" content="Astro v7.4.12"><!-- Theme & Favicon Controller: 自動遵循系統 Theme，並隨切換即時變更 Favicon 顏色 --><script>
+	function updateFavicon(isDark) {
+		const color = isDark ? '#ffffff' : '#000000';
+		const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,15.36 90,84.64 10,84.64" fill="${color}" /></svg>`;
+		const link = document.getElementById('siteFavicon');
+		if (link) {
+			link.href = `data:image/svg+xml,${encodeURIComponent(svg)}`;
+		}
+	}
+
+	function applyTheme(theme) {
+		const isDark = theme === 'dark';
+		if (isDark) {
+			document.documentElement.classList.add('dark');
+		} else {
+			document.documentElement.classList.remove('dark');
+		}
+		updateFavicon(isDark);
+	}
+
+	// 1. 初始化：優先依據儲存偏好，若未曾手動設定則自動遵循系統偏好
+	const savedTheme = localStorage.getItem('theme');
+	const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+	const currentTheme = savedTheme || (systemDark ? 'dark' : 'light');
+
+	applyTheme(currentTheme);
+
+	// 2. 監聽作業系統深淺色變化（若使用者尚未手動固定設定）
+	window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+		if (!localStorage.getItem('theme')) {
+			applyTheme(e.matches ? 'dark' : 'light');
+		}
+	});
+
+	// 3. 全域主題切換 API（供按鈕長按呼叫）
+	window.__toggleTheme = function () {
+		const isDark = document.documentElement.classList.toggle('dark');
+		const newTheme = isDark ? 'dark' : 'light';
+		localStorage.setItem('theme', newTheme);
+		updateFavicon(isDark);
+		return isDark;
+	};
+</script><!-- Google Fonts: 思源宋體 (Noto Serif TC) --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet"><!-- Canonical URL --><link rel="canonical" href="https://jasonsie1024.github.io/tags/"><!-- Primary Meta Tags --><title>所有標籤 · Jason 的日常雜記</title><meta name="description" content="文學嘗試、日常雜感與思緒片段。"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://jasonsie1024.github.io/tags/"><meta property="og:title" content="所有標籤 · Jason 的日常雜記"><meta property="og:description" content="文學嘗試、日常雜感與思緒片段。"><meta property="og:image" content="https://jasonsie1024.github.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://jasonsie1024.github.io/tags/"><meta property="twitter:title" content="所有標籤 · Jason 的日常雜記"><meta property="twitter:description" content="文學嘗試、日常雜感與思緒片段。"><meta property="twitter:image" content="https://jasonsie1024.github.io/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><link rel="stylesheet" href="/_astro/Header.DJpE3jUR.css"><style>.page-title[data-astro-cid-wybof3wm]{border:none;margin-top:0;margin-bottom:2.5rem;padding-bottom:0;font-size:1.85rem}.tag-cloud[data-astro-cid-wybof3wm]{flex-wrap:wrap;gap:1.5rem;margin:0;padding:0;list-style:none;display:flex}.tag-item[data-astro-cid-wybof3wm]{margin:0}.tag-link[data-astro-cid-wybof3wm]{color:var(--text);font-size:1.15rem;text-decoration:none;transition:opacity .15s}.tag-link[data-astro-cid-wybof3wm]:hover{opacity:.8}.tag-count[data-astro-cid-wybof3wm]{color:var(--text-muted);margin-left:.25rem;font-size:.88rem}.empty-state[data-astro-cid-wybof3wm]{color:var(--text-muted);padding:2rem 0}@media (width<=640px){.page-title[data-astro-cid-wybof3wm]{margin-bottom:2rem;font-size:1.6rem}.tag-link[data-astro-cid-wybof3wm]{font-size:1.05rem}}
+</style></head><body data-astro-cid-wybof3wm><header data-astro-cid-nen7h5rs><nav data-astro-cid-nen7h5rs><div class="site-brand" data-astro-cid-nen7h5rs><a href="/" class="brand-link" data-astro-cid-nen7h5rs>Jason 的日常雜記</a></div><div class="internal-links" data-astro-cid-nen7h5rs><a href="/" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>首頁</a><a href="/blog" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>文章</a><a href="/tags" class="active" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>標籤</a><a href="/about" data-astro-cid-nen7h5rs="true" data-astro-cid-evkijfd6>關於</a></div></nav></header><main data-astro-cid-wybof3wm><h1 class="page-title" data-astro-cid-wybof3wm>標籤總覽</h1><ul class="tag-cloud" data-astro-cid-wybof3wm><li class="tag-item" data-astro-cid-wybof3wm><a href="/tags/HackMD" class="tag-link" data-astro-cid-wybof3wm>#HackMD<span class="tag-count" data-astro-cid-wybof3wm>(1)</span></a></li><li class="tag-item" data-astro-cid-wybof3wm><a href="/tags/Markdown" class="tag-link" data-astro-cid-wybof3wm>#Markdown<span class="tag-count" data-astro-cid-wybof3wm>(1)</span></a></li><li class="tag-item" data-astro-cid-wybof3wm><a href="/tags/範例" class="tag-link" data-astro-cid-wybof3wm>#範例<span class="tag-count" data-astro-cid-wybof3wm>(1)</span></a></li></ul></main><footer data-astro-cid-jo6i4kqk><div class="footer-content" data-astro-cid-jo6i4kqk><p class="copyright" data-astro-cid-jo6i4kqk>@ 2026 Jason Sie.</p><div class="links" data-astro-cid-jo6i4kqk><a href="/rss.xml" data-astro-cid-jo6i4kqk>RSS</a></div></div></footer><button id="scrollToTopBtn" class="scroll-to-top" aria-label="點擊回到頂部，長按切換深淺模式" title="點擊：回到頁首 / 長按：切換深淺模式" data-astro-cid-p774adf7></button><script type="module">function e(){let e=document.getElementById(`scrollToTopBtn`);if(!e)return;let t=null,n=!1,r=()=>{n=!1,e.classList.add(`pressing`),t=setTimeout(()=>{n=!0,e.classList.remove(`pressing`),typeof window.__toggleTheme==`function`&&window.__toggleTheme()},500)},i=()=>{t&&=(clearTimeout(t),null),e.classList.remove(`pressing`)};e.addEventListener(`pointerdown`,e=>{e.button===0&&r()}),e.addEventListener(`pointerup`,()=>{i(),n||window.scrollTo({top:0,behavior:`smooth`})}),e.addEventListener(`pointerleave`,i),e.addEventListener(`pointercancel`,i),e.addEventListener(`contextmenu`,e=>{e.preventDefault()})}e(),document.addEventListener(`astro:after-swap`,e);</script></body></html>
